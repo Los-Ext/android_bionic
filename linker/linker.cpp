@@ -3610,18 +3610,7 @@ std::vector<android_namespace_t*> init_default_namespaces(const char* executable
     }
   }
 
-  uint32_t target_sdk = config->target_sdk_version();
-#ifdef SDK_VERSION_OVERRIDES
-  for (const auto& entry : android::base::Split(SDK_VERSION_OVERRIDES, " ")) {
-    auto splitted = android::base::Split(entry, "=");
-    if (splitted.size() == 2 && splitted[0] == executable_path) {
-      target_sdk = static_cast<uint32_t>(std::stoul(splitted[1]));
-      break;
-    }
-  }
-  DEBUG("Target SDK for %s = %d", executable_path, target_sdk);
-#endif
-  set_application_target_sdk_version(target_sdk);
+  set_application_target_sdk_version(config->target_sdk_version());
 
   std::vector<android_namespace_t*> created_namespaces;
   created_namespaces.reserve(namespaces.size());
